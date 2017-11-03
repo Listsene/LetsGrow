@@ -8,6 +8,7 @@
 #include <string.h>
 #include <linux/input.h>
 #include "bitmap.h"
+//just testing something
 
 #define  FBDEV_FILE "/dev/fb0"
 
