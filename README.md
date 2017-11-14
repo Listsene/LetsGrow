@@ -5,7 +5,7 @@ System Programming Group 4
 1. install git.exe
 2. open git bash
 
-To make a copy of the repository
+To make a copy of the repository    
 3. $git clone https://github.com/Listsene/LetsGrow.git
 
 To Update Repository
