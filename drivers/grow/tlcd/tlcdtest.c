@@ -130,7 +130,11 @@ int main(int argc , char **argv)
 		clearScreen(nline);
 		break;
 	}
-
+	/* Write test
+	setDDRAMAddr(nColumn, 1);
+	usleep(2000);
+	writeStr("temp: ");
+	*/
 	close(fd);
 	
 	return 0;
