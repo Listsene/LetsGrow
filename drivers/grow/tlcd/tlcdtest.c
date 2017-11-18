@@ -13,6 +13,8 @@
 #include <unistd.h>
 #include "tlcd.h"
 
+static int fd;
+
 int main(int argc , char **argv)
 {
 

@@ -5,7 +5,7 @@
 #define SUCCESS		0
 #define FAIL		1
 
-static int fd;
+
 #define DRIVER_NAME		"/dev/cntlcd"
 /******************************************************************************
 *

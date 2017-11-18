@@ -11,6 +11,7 @@
 #include <unistd.h>
 #include "tlcd.h"
 
+static int fd;
 /******************************************************************************
 *
 *      TEXT LCD FUNCTION
@@ -181,8 +182,7 @@ int writeStr(char* str)
 
 }
 
-#define LINE_NUM			2
-#define COLUMN_NUM			16			
+
 int clearScreen(int nline)
 {
 	int i;
@@ -231,8 +231,3 @@ void doHelp(void)
 	printf("tlcdtest r  : => clear screen \n");
 	printf("tlcdtest r 1: => clear line 1 \n");
 }
-
-
-#define CMD_TXT_WRITE		0
-#define CMD_CURSOR_POS		1
-#define CMD_CEAR_SCREEN		2
