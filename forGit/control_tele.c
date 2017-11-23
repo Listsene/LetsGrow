@@ -537,6 +537,14 @@ int tlcd_clearScreen(int nline){
   }
   return tlcd_TRUE;
 }
+int tlcd_functionSet()
+{
+  unsigned short cmd = 0x0038; // 5*8 dot charater , 8bit interface , 2 line
+
+  if (!writeCmd(cmd))
+    return FALSE;
+  return TRUE;
+}
 
 void write_tlcd(char* str_Line1, char* str_Line2) {
   printf("TLCD input : %s %s\n", str_Line1, str_Line2);
@@ -601,6 +609,8 @@ int main(int argc, char **argv) {
   int TLCD_default = 0;
   int TLCD_water = 0;
 
+  tlcd_functionSet();
+  
 	while(1){    
 		read(fd_keymx,&val_keymx,4);
 		read(fd_dipsw,&val_dipsw,4);
