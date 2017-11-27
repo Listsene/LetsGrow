@@ -1,3 +1,5 @@
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -9,14 +11,62 @@
 #include <string.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include "tlcd.h"
 
-static int fd;
+#define TRUE		1
+#define FALSE		0
+
+#define SUCCESS		0
+#define FAIL		1
+
+static int  fd ;
+
+#define DRIVER_NAME		"/dev/cntlcd"
 /******************************************************************************
 *
 *      TEXT LCD FUNCTION
 *
 ******************************************************************************/
+#define CLEAR_DISPLAY		0x0001
+#define CURSOR_AT_HOME		0x0002
+
+// Entry Mode set 
+#define MODE_SET_DEF		0x0004
+#define MODE_SET_DIR_RIGHT	0x0002
+#define MODE_SET_SHIFT		0x0001
+
+// Display on off
+#define DIS_DEF				0x0008
+#define DIS_LCD				0x0004
+#define DIS_CURSOR			0x0002
+#define DIS_CUR_BLINK		0x0001
+
+// shift
+#define CUR_DIS_DEF			0x0010
+#define CUR_DIS_SHIFT		0x0008
+#define CUR_DIS_DIR			0x0004
+
+// set DDRAM  address 
+#define SET_DDRAM_ADD_DEF	0x0080
+
+// read bit
+#define BUSY_BIT			0x0080
+#define DDRAM_ADD_MASK		0x007F
+
+
+#define DDRAM_ADDR_LINE_1	0x0000
+#define DDRAM_ADDR_LINE_2	0x0040
+
+
+#define SIG_BIT_E			0x0400
+#define SIG_BIT_RW			0x0200
+#define SIG_BIT_RS			0x0100
+
+/***************************************************
+read /write  sequence
+write cycle 
+RS,(R/W) => E (rise) => Data => E (fall) 
+
+***************************************************/
 int IsBusy(void)
 {
 	unsigned short wdata, rdata;
@@ -139,35 +189,8 @@ int writeCh(unsigned short ch)
 
 }
 
-
-int setCursorMode(int bMove , int bRightDir)
-{
-	unsigned short cmd = MODE_SET_DEF;
-
-	if (bMove)
-		cmd |=  MODE_SET_SHIFT;
-
-	if (bRightDir)
-		cmd |= MODE_SET_DIR_RIGHT;
-
-	if (!writeCmd(cmd))
-		return FALSE;
-	return TRUE;
-}
-
-int functionSet(void)
-{
-	unsigned short cmd = 0x0038; // 5*8 dot charater , 8bit interface , 2 line
-	printf("inserted!!!!!!\n");
-
-	if (!writeCmd(cmd))
-		return FALSE;
-	return TRUE;
-}
-
 int writeStr(char* str)
 {
-	printf("is it good?\n");
 	unsigned char wdata;
 	int i;
 	for(i =0; i < strlen(str) ;i++ )
@@ -182,7 +205,8 @@ int writeStr(char* str)
 
 }
 
-
+#define LINE_NUM			2
+#define COLUMN_NUM			16			
 int clearScreen(int nline)
 {
 	int i;
@@ -219,15 +243,29 @@ int clearScreen(int nline)
 	return TRUE;
 }
 
-void doHelp(void)
+void tlcdf() {
+	clearScreen(0);
+	displayMode(1, 1, TRUE);
+	setDDRAMAddr(0,1);
+	usleep(2000);
+	writeStr("temp: 18C");
+
+	setDDRAMAddr(0,2);
+	usleep(2000);
+	writeStr("hum: xx%");
+}
+
+int main(int argc , char **argv)
 {
-	printf("Usage:\n");
-	printf("tlcdtest w line string :=>display the string  at line  , charater  '_' =>' '\n");
-	printf(" ex) tlcdtest w 0 cndi_text_test :=>display 'cndi text test' at line 1 \n");
-	printf("tlcdtest c on|off blink line column : \n");
-	printf(" => cursor set on|off =>1 or 0 , b => blink 1|0 , line column line position \n");
-	printf("tlcdtset c  1 1 2 12  :=> display blink cursor at 2 line , 12 column.\n"); 
-	printf("tlcdtest r [line] : => clear screen or clear line \n");
-	printf("tlcdtest r  : => clear screen \n");
-	printf("tlcdtest r 1: => clear line 1 \n");
+	fd = open(DRIVER_NAME,O_RDWR);
+	if ( fd < 0 )
+	{
+		perror("driver open error.\n");
+		return 1;
+	}
+
+	tlcdf();
+	close(fd);
+	
+	return 0;
 }

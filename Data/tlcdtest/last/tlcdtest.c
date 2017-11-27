@@ -1,3 +1,5 @@
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -9,14 +11,62 @@
 #include <string.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include "tlcd.h"
 
-static int fd;
+#define TRUE		1
+#define FALSE		0
+
+#define SUCCESS		0
+#define FAIL		1
+
+static int  fd ;
+
+#define DRIVER_NAME		"/dev/cntlcd"
 /******************************************************************************
 *
 *      TEXT LCD FUNCTION
 *
 ******************************************************************************/
+#define CLEAR_DISPLAY		0x0001
+#define CURSOR_AT_HOME		0x0002
+
+// Entry Mode set 
+#define MODE_SET_DEF		0x0004
+#define MODE_SET_DIR_RIGHT	0x0002
+#define MODE_SET_SHIFT		0x0001
+
+// Display on off
+#define DIS_DEF				0x0008
+#define DIS_LCD				0x0004
+#define DIS_CURSOR			0x0002
+#define DIS_CUR_BLINK		0x0001
+
+// shift
+#define CUR_DIS_DEF			0x0010
+#define CUR_DIS_SHIFT		0x0008
+#define CUR_DIS_DIR			0x0004
+
+// set DDRAM  address 
+#define SET_DDRAM_ADD_DEF	0x0080
+
+// read bit
+#define BUSY_BIT			0x0080
+#define DDRAM_ADD_MASK		0x007F
+
+
+#define DDRAM_ADDR_LINE_1	0x0000
+#define DDRAM_ADDR_LINE_2	0x0040
+
+
+#define SIG_BIT_E			0x0400
+#define SIG_BIT_RW			0x0200
+#define SIG_BIT_RS			0x0100
+
+/***************************************************
+read /write  sequence
+write cycle 
+RS,(R/W) => E (rise) => Data => E (fall) 
+
+***************************************************/
 int IsBusy(void)
 {
 	unsigned short wdata, rdata;
@@ -158,7 +208,6 @@ int setCursorMode(int bMove , int bRightDir)
 int functionSet(void)
 {
 	unsigned short cmd = 0x0038; // 5*8 dot charater , 8bit interface , 2 line
-	printf("inserted!!!!!!\n");
 
 	if (!writeCmd(cmd))
 		return FALSE;
@@ -167,7 +216,6 @@ int functionSet(void)
 
 int writeStr(char* str)
 {
-	printf("is it good?\n");
 	unsigned char wdata;
 	int i;
 	for(i =0; i < strlen(str) ;i++ )
@@ -182,7 +230,8 @@ int writeStr(char* str)
 
 }
 
-
+#define LINE_NUM			2
+#define COLUMN_NUM			16			
 int clearScreen(int nline)
 {
 	int i;
@@ -230,4 +279,35 @@ void doHelp(void)
 	printf("tlcdtest r [line] : => clear screen or clear line \n");
 	printf("tlcdtest r  : => clear screen \n");
 	printf("tlcdtest r 1: => clear line 1 \n");
+}
+
+
+#define CMD_TXT_WRITE		0
+#define CMD_CURSOR_POS		1
+#define CMD_CEAR_SCREEN		2
+
+
+
+int main(int argc , char **argv)
+{
+
+	char strWtext[COLUMN_NUM+1] = "temp";
+	// open  driver 
+	fd = open(DRIVER_NAME,O_RDWR);
+	if ( fd < 0 )
+	{
+		perror("driver open error.\n");
+		return 1;
+	}
+
+	setDDRAMAddr(0, 1);
+	usleep(2000);
+	writeStr("temp:");
+
+	setDDRAMAddr(0, 2);
+	usleep(2000);
+	writeStr("humidity:");
+	close(fd);
+	
+	return 0;
 }

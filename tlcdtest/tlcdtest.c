@@ -1,3 +1,5 @@
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -9,14 +11,62 @@
 #include <string.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include "tlcd.h"
 
-static int fd;
+#define TRUE		1
+#define FALSE		0
+
+#define SUCCESS		0
+#define FAIL		1
+
+static int  fd ;
+
+#define DRIVER_NAME		"/dev/cntlcd"
 /******************************************************************************
 *
 *      TEXT LCD FUNCTION
 *
 ******************************************************************************/
+#define CLEAR_DISPLAY		0x0001
+#define CURSOR_AT_HOME		0x0002
+
+// Entry Mode set 
+#define MODE_SET_DEF		0x0004
+#define MODE_SET_DIR_RIGHT	0x0002
+#define MODE_SET_SHIFT		0x0001
+
+// Display on off
+#define DIS_DEF				0x0008
+#define DIS_LCD				0x0004
+#define DIS_CURSOR			0x0002
+#define DIS_CUR_BLINK		0x0001
+
+// shift
+#define CUR_DIS_DEF			0x0010
+#define CUR_DIS_SHIFT		0x0008
+#define CUR_DIS_DIR			0x0004
+
+// set DDRAM  address 
+#define SET_DDRAM_ADD_DEF	0x0080
+
+// read bit
+#define BUSY_BIT			0x0080
+#define DDRAM_ADD_MASK		0x007F
+
+
+#define DDRAM_ADDR_LINE_1	0x0000
+#define DDRAM_ADDR_LINE_2	0x0040
+
+
+#define SIG_BIT_E			0x0400
+#define SIG_BIT_RW			0x0200
+#define SIG_BIT_RS			0x0100
+
+/***************************************************
+read /write  sequence
+write cycle 
+RS,(R/W) => E (rise) => Data => E (fall) 
+
+***************************************************/
 int IsBusy(void)
 {
 	unsigned short wdata, rdata;
@@ -158,7 +208,6 @@ int setCursorMode(int bMove , int bRightDir)
 int functionSet(void)
 {
 	unsigned short cmd = 0x0038; // 5*8 dot charater , 8bit interface , 2 line
-	printf("inserted!!!!!!\n");
 
 	if (!writeCmd(cmd))
 		return FALSE;
@@ -167,7 +216,6 @@ int functionSet(void)
 
 int writeStr(char* str)
 {
-	printf("is it good?\n");
 	unsigned char wdata;
 	int i;
 	for(i =0; i < strlen(str) ;i++ )
@@ -182,7 +230,8 @@ int writeStr(char* str)
 
 }
 
-
+#define LINE_NUM			2
+#define COLUMN_NUM			16			
 int clearScreen(int nline)
 {
 	int i;
@@ -230,4 +279,132 @@ void doHelp(void)
 	printf("tlcdtest r [line] : => clear screen or clear line \n");
 	printf("tlcdtest r  : => clear screen \n");
 	printf("tlcdtest r 1: => clear line 1 \n");
+}
+
+
+#define CMD_TXT_WRITE		0
+#define CMD_CURSOR_POS		1
+#define CMD_CEAR_SCREEN		2
+
+
+
+int main(int argc , char **argv)
+{
+
+	int nCmdMode;
+	int bCursorOn, bBlink, nline , nColumn;
+	char strWtext[COLUMN_NUM+1];
+	
+	if (argc < 2 )
+	{
+		perror(" Args number is less than 2\n");
+		doHelp();
+		return 1;
+	}
+	
+	if ( argv[1][0] == 'w' ) 
+	{
+		nCmdMode =  CMD_TXT_WRITE ;
+		if (argc < 4 )
+		{
+			perror(" w argument number is short.\n");
+			doHelp();
+			return 1;
+		}
+		nline = atoi(argv[2]);
+		printf("nline :%d\n",nline);
+		if ( (nline != 1 ) && (nline != 2 ))
+		{
+			perror("line para is worng.\n");
+			doHelp();
+			return 1;
+		}
+
+		if (strlen(argv[3]) > COLUMN_NUM )
+		{
+			strncpy(strWtext,argv[3],COLUMN_NUM);
+			strWtext[COLUMN_NUM] = '\0';
+		}
+		else
+		{
+			strcpy(strWtext,argv[3]);
+
+		}
+	}
+	else if (  argv[1][0] == 'c' )
+	{
+		nCmdMode =  CMD_CURSOR_POS ;
+		if ( argc < 6 ) 
+		{
+			perror(" c argument number is short.\n");
+			doHelp();
+			return 1;
+		}
+		bCursorOn = atoi(argv[2]);
+
+		bBlink = atoi(argv[3]);
+
+		nline = atoi(argv[4]);
+		if ( (nline != 1 ) && (nline != 2 ))
+		{
+			perror("line para is worng.\n");
+			doHelp();
+			return 1;
+		}
+		nColumn = atoi(argv[5]);
+		if ( nColumn >15 ) 
+		{
+			perror(" nColumn max number is 15.\n");
+			doHelp();
+			return 1;
+		}
+	}
+	else if ( argv[1][0] == 'r' )
+	{
+		nCmdMode =  CMD_CEAR_SCREEN;
+		if ( argc == 3 )
+		{
+			nline = atoi(argv[2]);
+			if ( (nline != 1)&& (nline != 2))
+				nline = 0;
+		}
+		else
+			nline = 0;
+	}
+	else
+	{
+		perror(" not supported option. \n");
+		doHelp();
+		return 1;
+	}
+	
+	// open  driver 
+	fd = open(DRIVER_NAME,O_RDWR);
+	if ( fd < 0 )
+	{
+		perror("driver open error.\n");
+		return 1;
+	}
+	functionSet();
+
+	switch ( nCmdMode )
+	{
+	case CMD_TXT_WRITE:
+//		printf("nline:%d ,nColumn:%d\n",nline,nColumn);
+		setDDRAMAddr(nColumn, nline);
+		usleep(2000);
+		writeStr(strWtext);
+		break;
+	case CMD_CURSOR_POS:
+		displayMode(bCursorOn, bBlink, TRUE);
+		setDDRAMAddr(nline-1, nColumn);
+		break;
+	case CMD_CEAR_SCREEN:
+		clearScreen(nline);
+		break;
+	}
+
+	close(fd);
+	
+	return 0;
 }
