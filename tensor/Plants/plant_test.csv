@@ -1,10 +1,10 @@
-﻿19,8,11,c-moist,tomato
-23,9,7,c-drain,lavender
-28,7,6,c-moist,basil
-8,8,5,c-drain,lettuce
-19,8,6,c-moist,rosemary
-20,9,8,c-drain,lavender
-24,8,10,c-moist,tomato
-21,8,8,c-drain,lavender
-27,7,6,c-moist,basil
-12,9,3,c-drain,lettuce
+19	8	11	tomato	moist
+23	9	7	lavender	drain
+28	7	6	basil	moist
+8	8	5	lettuce	drain
+19	8	6	rosemary	moist
+20	9	8	lavender	drain
+24	8	10	tomato	moist
+21	8	8	lavender	drain
+27	7	6	basil	moist
+12	9	3	lettuce	drain

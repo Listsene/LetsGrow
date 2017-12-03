@@ -695,7 +695,7 @@ node {
     key: "dataset_factory"
     value {
       func {
-        name: "_make_dataset_21f4d6d3"
+        name: "_make_dataset_04cadb19"
       }
     }
   }
@@ -1623,7 +1623,7 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/ExpandDims/dim"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/ExpandDims/dim"
   op: "Const"
   input: "^add"
   attr {
@@ -1654,10 +1654,10 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/ExpandDims"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/ExpandDims"
   op: "ExpandDims"
   input: "IteratorGetNext:2"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/ExpandDims/dim"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/ExpandDims/dim"
   attr {
     key: "T"
     value {
@@ -1687,9 +1687,9 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/Shape"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/Shape"
   op: "Shape"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/ExpandDims"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/ExpandDims"
   attr {
     key: "T"
     value {
@@ -1716,9 +1716,9 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/Cast"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/Cast"
   op: "Cast"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/Shape"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/Shape"
   attr {
     key: "DstT"
     value {
@@ -1745,7 +1745,7 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/Cast_1/x"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/Cast_1/x"
   op: "Const"
   input: "^add"
   attr {
@@ -1776,10 +1776,10 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/NotEqual"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/NotEqual"
   op: "NotEqual"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/ExpandDims"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/Cast_1/x"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/ExpandDims"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/Cast_1/x"
   attr {
     key: "T"
     value {
@@ -1803,9 +1803,9 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/Where"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/Where"
   op: "Where"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/NotEqual"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/NotEqual"
   attr {
     key: "_output_shapes"
     value {
@@ -1823,7 +1823,7 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/Reshape/shape"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/Reshape/shape"
   op: "Const"
   input: "^add"
   attr {
@@ -1860,10 +1860,10 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/Reshape"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/Reshape"
   op: "Reshape"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/ExpandDims"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/Reshape/shape"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/ExpandDims"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/Reshape/shape"
   attr {
     key: "T"
     value {
@@ -1890,7 +1890,7 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/strided_slice/stack"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/strided_slice/stack"
   op: "Const"
   input: "^add"
   attr {
@@ -1927,7 +1927,7 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/strided_slice/stack_1"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/strided_slice/stack_1"
   op: "Const"
   input: "^add"
   attr {
@@ -1964,7 +1964,7 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/strided_slice/stack_2"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/strided_slice/stack_2"
   op: "Const"
   input: "^add"
   attr {
@@ -2001,12 +2001,12 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/strided_slice"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/strided_slice"
   op: "StridedSlice"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/Where"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/strided_slice/stack"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/strided_slice/stack_1"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/strided_slice/stack_2"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/Where"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/strided_slice/stack"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/strided_slice/stack_1"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/strided_slice/stack_2"
   attr {
     key: "Index"
     value {
@@ -2063,7 +2063,7 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/strided_slice_1/stack"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/strided_slice_1/stack"
   op: "Const"
   input: "^add"
   attr {
@@ -2100,7 +2100,7 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/strided_slice_1/stack_1"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/strided_slice_1/stack_1"
   op: "Const"
   input: "^add"
   attr {
@@ -2137,7 +2137,7 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/strided_slice_1/stack_2"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/strided_slice_1/stack_2"
   op: "Const"
   input: "^add"
   attr {
@@ -2174,12 +2174,12 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/strided_slice_1"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/strided_slice_1"
   op: "StridedSlice"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/Where"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/strided_slice_1/stack"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/strided_slice_1/stack_1"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/strided_slice_1/stack_2"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/Where"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/strided_slice_1/stack"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/strided_slice_1/stack_1"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/strided_slice_1/stack_2"
   attr {
     key: "Index"
     value {
@@ -2239,9 +2239,9 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/unstack"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/unstack"
   op: "Unpack"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/Cast"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/Cast"
   attr {
     key: "T"
     value {
@@ -2273,9 +2273,9 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/stack"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/stack"
   op: "Pack"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/unstack:1"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/unstack:1"
   attr {
     key: "N"
     value {
@@ -2308,10 +2308,10 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/Mul"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/Mul"
   op: "Mul"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/strided_slice_1"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/stack"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/strided_slice_1"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/stack"
   attr {
     key: "T"
     value {
@@ -2335,7 +2335,7 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/Sum/reduction_indices"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/Sum/reduction_indices"
   op: "Const"
   input: "^add"
   attr {
@@ -2372,10 +2372,10 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/Sum"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/Sum"
   op: "Sum"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/Mul"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/Sum/reduction_indices"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/Mul"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/Sum/reduction_indices"
   attr {
     key: "T"
     value {
@@ -2408,10 +2408,10 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/Add"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/Add"
   op: "Add"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/strided_slice"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/Sum"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/strided_slice"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/Sum"
   attr {
     key: "T"
     value {
@@ -2432,10 +2432,10 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/Gather"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/Gather"
   op: "Gather"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/Reshape"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/Add"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/Reshape"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/Add"
   attr {
     key: "Tindices"
     value {
@@ -2468,7 +2468,7 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/soil_lookup/Const"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/plant_lookup/Const"
   op: "Const"
   input: "^add"
   attr {
@@ -2477,7 +2477,7 @@ node {
       list {
         shape {
           dim {
-            size: 2
+            size: 5
           }
         }
       }
@@ -2496,17 +2496,20 @@ node {
         dtype: DT_STRING
         tensor_shape {
           dim {
-            size: 2
+            size: 5
           }
         }
-        string_val: "c-moist"
-        string_val: "c-drain"
+        string_val: "tomato"
+        string_val: "basil"
+        string_val: "lettuce"
+        string_val: "rosemary"
+        string_val: "lavender"
       }
     }
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/soil_lookup/Size"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/plant_lookup/Size"
   op: "Const"
   input: "^add"
   attr {
@@ -2531,13 +2534,13 @@ node {
         dtype: DT_INT32
         tensor_shape {
         }
-        int_val: 2
+        int_val: 5
       }
     }
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/soil_lookup/range/start"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/plant_lookup/range/start"
   op: "Const"
   input: "^add"
   attr {
@@ -2568,7 +2571,7 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/soil_lookup/range/delta"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/plant_lookup/range/delta"
   op: "Const"
   input: "^add"
   attr {
@@ -2599,11 +2602,11 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/soil_lookup/range"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/plant_lookup/range"
   op: "Range"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/soil_lookup/range/start"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/soil_lookup/Size"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/soil_lookup/range/delta"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/plant_lookup/range/start"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/plant_lookup/Size"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/plant_lookup/range/delta"
   attr {
     key: "Tidx"
     value {
@@ -2616,7 +2619,7 @@ node {
       list {
         shape {
           dim {
-            size: 2
+            size: 5
           }
         }
       }
@@ -2624,9 +2627,9 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/soil_lookup/ToInt64"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/plant_lookup/ToInt64"
   op: "Cast"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/soil_lookup/range"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/plant_lookup/range"
   attr {
     key: "DstT"
     value {
@@ -2645,7 +2648,7 @@ node {
       list {
         shape {
           dim {
-            size: 2
+            size: 5
           }
         }
       }
@@ -2653,7 +2656,7 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/soil_lookup/hash_table"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/plant_lookup/hash_table"
   op: "HashTableV2"
   input: "^add"
   attr {
@@ -2697,7 +2700,7 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/soil_lookup/hash_table/Const"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/plant_lookup/hash_table/Const"
   op: "Const"
   input: "^add"
   attr {
@@ -2728,11 +2731,11 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/soil_lookup/hash_table/table_init"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/plant_lookup/hash_table/table_init"
   op: "InitializeTableV2"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/soil_lookup/hash_table"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/soil_lookup/Const"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/soil_lookup/ToInt64"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/plant_lookup/hash_table"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/plant_lookup/Const"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/plant_lookup/ToInt64"
   attr {
     key: "Tkey"
     value {
@@ -2747,11 +2750,11 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/hash_table_Lookup"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/hash_table_Lookup"
   op: "LookupTableFindV2"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/soil_lookup/hash_table"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/Gather"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/soil_lookup/hash_table/Const"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/plant_lookup/hash_table"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/Gather"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/plant_lookup/hash_table/Const"
   attr {
     key: "Tin"
     value {
@@ -2778,7 +2781,7 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/SparseToDense/default_value"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/SparseToDense/default_value"
   op: "Const"
   input: "^add"
   attr {
@@ -2809,12 +2812,12 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/SparseToDense"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/SparseToDense"
   op: "SparseToDense"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/Where"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/to_sparse_input/Cast"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/hash_table_Lookup"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/SparseToDense/default_value"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/Where"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/to_sparse_input/Cast"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/hash_table_Lookup"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/SparseToDense/default_value"
   attr {
     key: "T"
     value {
@@ -2850,7 +2853,7 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/one_hot/Const"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/one_hot/Const"
   op: "Const"
   input: "^add"
   attr {
@@ -2881,7 +2884,7 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/one_hot/Const_1"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/one_hot/Const_1"
   op: "Const"
   input: "^add"
   attr {
@@ -2912,7 +2915,7 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/one_hot/depth"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/one_hot/depth"
   op: "Const"
   input: "^add"
   attr {
@@ -2937,13 +2940,13 @@ node {
         dtype: DT_INT32
         tensor_shape {
         }
-        int_val: 2
+        int_val: 5
       }
     }
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/one_hot/on_value"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/one_hot/on_value"
   op: "Const"
   input: "^add"
   attr {
@@ -2974,7 +2977,7 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/one_hot/off_value"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/one_hot/off_value"
   op: "Const"
   input: "^add"
   attr {
@@ -3005,12 +3008,12 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/one_hot"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/one_hot"
   op: "OneHot"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/SparseToDense"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/one_hot/depth"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/one_hot/on_value"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/one_hot/off_value"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/SparseToDense"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/one_hot/depth"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/one_hot/on_value"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/one_hot/off_value"
   attr {
     key: "T"
     value {
@@ -3035,7 +3038,7 @@ node {
             size: -1
           }
           dim {
-            size: 2
+            size: 5
           }
         }
       }
@@ -3049,7 +3052,7 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/Sum/reduction_indices"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/Sum/reduction_indices"
   op: "Const"
   input: "^add"
   attr {
@@ -3086,10 +3089,10 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/Sum"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/Sum"
   op: "Sum"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/one_hot"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/Sum/reduction_indices"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/one_hot"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/Sum/reduction_indices"
   attr {
     key: "T"
     value {
@@ -3111,7 +3114,7 @@ node {
             size: -1
           }
           dim {
-            size: 2
+            size: 5
           }
         }
       }
@@ -3125,9 +3128,9 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/Shape"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/Shape"
   op: "Shape"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/Sum"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/Sum"
   attr {
     key: "T"
     value {
@@ -3154,7 +3157,7 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/strided_slice/stack"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/strided_slice/stack"
   op: "Const"
   input: "^add"
   attr {
@@ -3191,7 +3194,7 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/strided_slice/stack_1"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/strided_slice/stack_1"
   op: "Const"
   input: "^add"
   attr {
@@ -3228,7 +3231,7 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/strided_slice/stack_2"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/strided_slice/stack_2"
   op: "Const"
   input: "^add"
   attr {
@@ -3265,12 +3268,12 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/strided_slice"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/strided_slice"
   op: "StridedSlice"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/Shape"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/strided_slice/stack"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/strided_slice/stack_1"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/strided_slice/stack_2"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/Shape"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/strided_slice/stack"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/strided_slice/stack_1"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/strided_slice/stack_2"
   attr {
     key: "Index"
     value {
@@ -3324,7 +3327,7 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/Reshape/shape/1"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/Reshape/shape/1"
   op: "Const"
   input: "^add"
   attr {
@@ -3349,16 +3352,16 @@ node {
         dtype: DT_INT32
         tensor_shape {
         }
-        int_val: 2
+        int_val: 5
       }
     }
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/Reshape/shape"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/Reshape/shape"
   op: "Pack"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/strided_slice"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/Reshape/shape/1"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/strided_slice"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/Reshape/shape/1"
   attr {
     key: "N"
     value {
@@ -3391,10 +3394,10 @@ node {
   }
 }
 node {
-  name: "dnn/input_from_feature_columns/input_layer/soil_indicator/Reshape"
+  name: "dnn/input_from_feature_columns/input_layer/plant_indicator/Reshape"
   op: "Reshape"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/Sum"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/Reshape/shape"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/Sum"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/Reshape/shape"
   attr {
     key: "T"
     value {
@@ -3416,7 +3419,7 @@ node {
             size: -1
           }
           dim {
-            size: 2
+            size: 5
           }
         }
       }
@@ -3854,7 +3857,7 @@ node {
   op: "ConcatV2"
   input: "dnn/input_from_feature_columns/input_layer/light/Reshape"
   input: "dnn/input_from_feature_columns/input_layer/pH/Reshape"
-  input: "dnn/input_from_feature_columns/input_layer/soil_indicator/Reshape"
+  input: "dnn/input_from_feature_columns/input_layer/plant_indicator/Reshape"
   input: "dnn/input_from_feature_columns/input_layer/temp/Reshape"
   input: "dnn/input_from_feature_columns/input_layer/concat/axis"
   attr {
@@ -3884,7 +3887,7 @@ node {
             size: -1
           }
           dim {
-            size: 5
+            size: 8
           }
         }
       }
@@ -3930,7 +3933,7 @@ node {
             size: 2
           }
         }
-        tensor_content: "\005\000\000\000d\000\000\000"
+        tensor_content: "\010\000\000\000d\000\000\000"
       }
     }
   }
@@ -3968,7 +3971,7 @@ node {
         dtype: DT_FLOAT
         tensor_shape {
         }
-        float_val: -0.23904572427272797
+        float_val: -0.2357022613286972
       }
     }
   }
@@ -4006,7 +4009,7 @@ node {
         dtype: DT_FLOAT
         tensor_shape {
         }
-        float_val: 0.23904572427272797
+        float_val: 0.2357022613286972
       }
     }
   }
@@ -4035,7 +4038,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 8
           }
           dim {
             size: 100
@@ -4117,7 +4120,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 8
           }
           dim {
             size: 100
@@ -4152,7 +4155,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 8
           }
           dim {
             size: 100
@@ -4179,7 +4182,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 8
           }
           dim {
             size: 100
@@ -4205,7 +4208,7 @@ node {
     value {
       shape {
         dim {
-          size: 5
+          size: 8
         }
         dim {
           size: 100
@@ -4245,7 +4248,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 8
           }
           dim {
             size: 100
@@ -4291,7 +4294,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 8
           }
           dim {
             size: 100
@@ -4488,7 +4491,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 8
           }
           dim {
             size: 100
@@ -16426,7 +16429,7 @@ node {
             size: -1
           }
           dim {
-            size: 5
+            size: 8
           }
         }
       }
@@ -16462,7 +16465,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 8
           }
           dim {
             size: 100
@@ -16519,7 +16522,7 @@ node {
             size: -1
           }
           dim {
-            size: 5
+            size: 8
           }
         }
       }
@@ -16551,7 +16554,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 8
           }
           dim {
             size: 100
@@ -16578,7 +16581,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 8
           }
           dim {
             size: 100
@@ -16600,7 +16603,7 @@ node {
         dtype: DT_FLOAT
         tensor_shape {
           dim {
-            size: 5
+            size: 8
           }
           dim {
             size: 100
@@ -16628,7 +16631,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 8
           }
           dim {
             size: 100
@@ -16654,7 +16657,7 @@ node {
     value {
       shape {
         dim {
-          size: 5
+          size: 8
         }
         dim {
           size: 100
@@ -16694,7 +16697,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 8
           }
           dim {
             size: 100
@@ -16740,7 +16743,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 8
           }
           dim {
             size: 100
@@ -18419,7 +18422,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 8
           }
           dim {
             size: 100
@@ -22050,7 +22053,7 @@ node {
 node {
   name: "init_all_tables"
   op: "NoOp"
-  input: "^dnn/input_from_feature_columns/input_layer/soil_indicator/soil_lookup/hash_table/table_init"
+  input: "^dnn/input_from_feature_columns/input_layer/plant_indicator/plant_lookup/hash_table/table_init"
 }
 node {
   name: "group_deps_1"
@@ -22144,7 +22147,7 @@ node {
         dtype: DT_STRING
         tensor_shape {
         }
-        string_val: "_temp_60b036e0a1fe49d3a4c41c561c75b3a2/part"
+        string_val: "_temp_00dffb6328524ba4a5860502c8332e34/part"
       }
     }
   }
@@ -22341,8 +22344,8 @@ node {
         }
         string_val: "100 0,100"
         string_val: "100 0,100"
-        string_val: "5 100 0,5:0,100"
-        string_val: "5 100 0,5:0,100"
+        string_val: "8 100 0,8:0,100"
+        string_val: "8 100 0,8:0,100"
         string_val: "75 0,75"
         string_val: "75 0,75"
         string_val: "100 75 0,100:0,75"
@@ -22872,7 +22875,7 @@ node {
             size: 1
           }
         }
-        string_val: "5 100 0,5:0,100"
+        string_val: "8 100 0,8:0,100"
       }
     }
   }
@@ -22889,7 +22892,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 8
           }
           dim {
             size: 100
@@ -22932,7 +22935,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 8
           }
           dim {
             size: 100
@@ -23021,7 +23024,7 @@ node {
             size: 1
           }
         }
-        string_val: "5 100 0,5:0,100"
+        string_val: "8 100 0,8:0,100"
       }
     }
   }
@@ -23038,7 +23041,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 8
           }
           dim {
             size: 100
@@ -23081,7 +23084,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 8
           }
           dim {
             size: 100
@@ -25610,7 +25613,7 @@ node {
 library {
   function {
     signature {
-      name: "tf_map_func_68945858"
+      name: "tf_map_func_7dafc7c3"
       input_arg {
         name: "arg0"
         type: DT_STRING
@@ -25813,7 +25816,7 @@ library {
             dtype: DT_STRING
             tensor_shape {
             }
-            string_val: "tomato"
+            string_val: "moist"
           }
         }
       }
@@ -25853,7 +25856,7 @@ library {
   }
   function {
     signature {
-      name: "_make_dataset_21f4d6d3"
+      name: "_make_dataset_04cadb19"
       output_arg {
         name: "BatchDataset"
         type: DT_VARIANT
@@ -26060,7 +26063,7 @@ library {
         key: "f"
         value {
           func {
-            name: "tf_map_func_68945858"
+            name: "tf_map_func_7dafc7c3"
           }
         }
       }

@@ -10,7 +10,7 @@ import sys
 import tensorflow as tf
 
 _CSV_COLUMNS = [
-    'temp', 'pH', 'light', 'soil', 'plant',
+    'temp', 'pH', 'light', 'plant', 'soil',
 ]
 
 _CSV_COLUMN_DEFAULTS = [[0], [0], [0], [''], ['']]
@@ -56,10 +56,9 @@ def build_model_columns():
   pH = tf.feature_column.numeric_column('pH')
   light = tf.feature_column.numeric_column('light')
 
-  soil = tf.feature_column.categorical_column_with_vocabulary_list(
-      'soil', [
-          'c-moist', 'c-drain'])
-
+  plant = tf.feature_column.categorical_column_with_vocabulary_list(
+      'plant', [
+          'tomato', 'basil', 'lettuce', 'rosemary', 'lavender'])
 
   # Transformations.
   temp_buckets = tf.feature_column.bucketized_column(
@@ -67,14 +66,14 @@ def build_model_columns():
 
   # Wide columns and deep columns.
   base_columns = [
-      temp_buckets, pH, light, soil
+      temp_buckets, pH, light, plant
   ]
 
   crossed_columns = [
       tf.feature_column.crossed_column(
-          ['pH', 'soil'], hash_bucket_size=1000),
+          ['pH', 'temp'], hash_bucket_size=1000),
       tf.feature_column.crossed_column(
-          [temp_buckets, 'light', 'soil'], hash_bucket_size=1000),
+          [temp_buckets, 'light', 'plant'], hash_bucket_size=1000),
   ]
 
   wide_columns = base_columns + crossed_columns
@@ -83,7 +82,7 @@ def build_model_columns():
       temp,
       pH,
       light,
-      tf.feature_column.indicator_column(soil),
+      tf.feature_column.indicator_column(plant),
   ]
 
   return wide_columns, deep_columns
@@ -129,13 +128,9 @@ def input_fn(data_file, num_epochs, shuffle, batch_size):
     print('Parsing', data_file)
     columns = tf.decode_csv(value, record_defaults=_CSV_COLUMN_DEFAULTS)
     features = dict(zip(_CSV_COLUMNS, columns))
-    labels = features.pop('plant')
-    return features, tf.equal(labels, 'tomato')
-    return features, tf.equal(labels, 'basil')
-    return features, tf.equal(labels, 'lettuce')
-    return features, tf.equal(labels, 'rosemary')
-    return features, tf.equal(labels, 'lavender')
-
+    labels = features.pop('soil')
+    return features, tf.equal(labels, 'moist')
+    
   # Extract lines from input files using the Dataset API.
   dataset = tf.data.TextLineDataset(data_file)
 

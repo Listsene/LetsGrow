@@ -25,16 +25,16 @@ import plant
 
 tf.logging.set_verbosity(tf.logging.ERROR)
 
-TEST_INPUT = ('19,8,11,c-moist,tomato')
+TEST_INPUT = ('19,8,11,tomato,moist,')
 
 TEST_INPUT_VALUES = {
     'temp': 19,
     'pH': 8,
     'light': 11,
-    'soil': 'c-moist',
+    'plant': 'tomato',
 }
 
-TEST_CSV = os.path.join(os.path.dirname(__file__), 'plant_test.csv')
+TEST_CSV = 'plant_test.csv'
 
 
 class BaseTest(tf.test.TestCase):
