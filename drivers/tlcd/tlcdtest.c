@@ -12,54 +12,37 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-#define TRUE		1
-#define FALSE		0
-
-#define SUCCESS		0
-#define FAIL		1
-
-static int  fd ;
-
-#define DRIVER_NAME		"/dev/cntlcd"
+#define tlcd_TRUE		1
+#define tlcd_FALSE		0
 /******************************************************************************
 *
 *      TEXT LCD FUNCTION
 *
 ******************************************************************************/
-#define CLEAR_DISPLAY		0x0001
-#define CURSOR_AT_HOME		0x0002
+#define tlcd_CLEAR_DISPLAY		0x0001
+#define tlcd_CURSOR_AT_HOME		0x0002
 
 // Entry Mode set 
-#define MODE_SET_DEF		0x0004
-#define MODE_SET_DIR_RIGHT	0x0002
-#define MODE_SET_SHIFT		0x0001
 
 // Display on off
-#define DIS_DEF				0x0008
-#define DIS_LCD				0x0004
-#define DIS_CURSOR			0x0002
-#define DIS_CUR_BLINK		0x0001
-
-// shift
-#define CUR_DIS_DEF			0x0010
-#define CUR_DIS_SHIFT		0x0008
-#define CUR_DIS_DIR			0x0004
+#define tlcd_DIS_DEF				0x0008
+#define tlcd_DIS_LCD				0x0004
+#define tlcd_DIS_CURSOR			0x0002
+#define tlcd_DIS_CUR_BLINK		0x0001
 
 // set DDRAM  address 
-#define SET_DDRAM_ADD_DEF	0x0080
+#define tlcd_SET_DDRAM_ADD_DEF	0x0080
 
 // read bit
-#define BUSY_BIT			0x0080
-#define DDRAM_ADD_MASK		0x007F
+#define tlcd_BUSY_BIT			0x0080
+
+#define tlcd_DDRAM_ADDR_LINE_1	0x0000
+#define tlcd_DDRAM_ADDR_LINE_2	0x0040
 
 
-#define DDRAM_ADDR_LINE_1	0x0000
-#define DDRAM_ADDR_LINE_2	0x0040
-
-
-#define SIG_BIT_E			0x0400
-#define SIG_BIT_RW			0x0200
-#define SIG_BIT_RS			0x0100
+#define tlcd_SIG_BIT_E			0x0400
+#define tlcd_SIG_BIT_RW			0x0200
+#define tlcd_SIG_BIT_RS			0x0100
 
 /***************************************************
 read /write  sequence
@@ -67,129 +50,127 @@ write cycle
 RS,(R/W) => E (rise) => Data => E (fall) 
 
 ***************************************************/
-int IsBusy(void)
-{
+int tlcd_IsBusy(void){
 	unsigned short wdata, rdata;
 
-	wdata = SIG_BIT_RW;
+	wdata = tlcd_SIG_BIT_RW;
 	write(fd ,&wdata,2);
 
-	wdata = SIG_BIT_RW | SIG_BIT_E;
+	wdata = tlcd_SIG_BIT_RW | tlcd_SIG_BIT_E;
 	write(fd ,&wdata,2);
 
 	read(fd,&rdata ,2);
 
-	wdata = SIG_BIT_RW;
+	wdata = tlcd_SIG_BIT_RW;
 	write(fd,&wdata,2);
 
-	if (rdata &  BUSY_BIT)
-		return TRUE;
+	if (rdata &  tlcd_BUSY_BIT)
+		return tlcd_TRUE;
 
-	return FALSE;
+	return tlcd_FALSE;
 }
-int writeCmd(unsigned short cmd)
-{
+int tlcd_writeCmd(unsigned short cmd){
 	unsigned short wdata ;
 
-	if ( IsBusy())
-		return FALSE;
+	if ( tlcd_IsBusy())
+		return tlcd_FALSE;
 
 	wdata = cmd;
 	write(fd ,&wdata,2);
 
-	wdata = cmd | SIG_BIT_E;
+	wdata = cmd | tlcd_SIG_BIT_E;
 	write(fd ,&wdata,2);
 
 	wdata = cmd ;
 	write(fd ,&wdata,2);
 
-	return TRUE;
+	return tlcd_TRUE;
 }
 
-int setDDRAMAddr(int x , int y)
+int tlcd_setDDRAMAddr(int x , int y)
 {
 	unsigned short cmd = 0;
 //	printf("x :%d , y:%d \n",x,y);
-	if(IsBusy())
+	if(tlcd_IsBusy())
 	{
 		perror("setDDRAMAddr busy error.\n");
-		return FALSE;
+		return tlcd_FALSE;
 
 	}
 
 	if ( y == 1 )
 	{
-		cmd = DDRAM_ADDR_LINE_1 +x;
+		cmd = tlcd_DDRAM_ADDR_LINE_1 +x;
 	}
 	else if(y == 2 )
 	{
-		cmd = DDRAM_ADDR_LINE_2 +x;
+		cmd = tlcd_DDRAM_ADDR_LINE_2 +x;
 	}
 	else
-		return FALSE;
+		return tlcd_FALSE;
 
 	if ( cmd >= 0x80)
-		return FALSE;
+		return tlcd_FALSE;
 
 	
-//	printf("setDDRAMAddr w1 :0x%X\n",cmd);
+//	printf("tlcd_setDDRAMAddr w1 :0x%X\n",cmd);
 
-	if (!writeCmd(cmd | SET_DDRAM_ADD_DEF))
+	if (!tlcd_writeCmd(cmd | tlcd_SET_DDRAM_ADD_DEF))
 	{
-		perror("setDDRAMAddr error\n");
-		return FALSE;
+		perror("tlcd_setDDRAMAddr error\n");
+		return tlcd_FALSE;
 	}
-//	printf("setDDRAMAddr w :0x%X\n",cmd|SET_DDRAM_ADD_DEF);
+//	printf("tlcd_setDDRAMAddr w :0x%X\n",cmd|tlcd_SET_DDRAM_ADD_DEF);
 	usleep(1000);
-	return TRUE;
+	return tlcd_TRUE;
 }
 
-int displayMode(int bCursor, int bCursorblink, int blcd  )
+int tlcd_displayMode(int bCursor, int bCursorblink, int blcd  )
 {
 	unsigned short cmd  = 0;
 
 	if ( bCursor)
 	{
-		cmd = DIS_CURSOR;
+		cmd = tlcd_DIS_CURSOR;
 	}
 
 	if (bCursorblink )
 	{
-		cmd |= DIS_CUR_BLINK;
+		cmd |= tlcd_DIS_CUR_BLINK;
 	}
 
 	if ( blcd )
 	{
-		cmd |= DIS_LCD;
+		cmd |= tlcd_DIS_LCD;
 	}
 
-	if (!writeCmd(cmd | DIS_DEF))
-		return FALSE;
+	if (!tlcd_writeCmd(cmd | tlcd_DIS_DEF))
+		return tlcd_FALSE;
 
-	return TRUE;
+	return tlcd_TRUE;
 }
 
-int writeCh(unsigned short ch)
+int tlcd_writeCh(unsigned short ch)
 {
 	unsigned short wdata =0;
 
-	if ( IsBusy())
-		return FALSE;
+	if ( tlcd_IsBusy())
+		return tlcd_FALSE;
 
-	wdata = SIG_BIT_RS | ch;
+	wdata = tlcd_SIG_BIT_RS | ch;
 	write(fd ,&wdata,2);
 
-	wdata = SIG_BIT_RS | ch | SIG_BIT_E;
+	wdata = tlcd_SIG_BIT_RS | ch | tlcd_SIG_BIT_E;
 	write(fd ,&wdata,2);
 
-	wdata = SIG_BIT_RS | ch;
+	wdata = tlcd_SIG_BIT_RS | ch;
 	write(fd ,&wdata,2);
 	usleep(1000);
-	return TRUE;
+	return tlcd_TRUE;
 
 }
 
-int writeStr(char* str)
+int tlcd_writeStr(char* str)
 {
 	unsigned char wdata;
 	int i;
@@ -199,72 +180,72 @@ int writeStr(char* str)
 			wdata = (unsigned char)' ';
 		else
 			wdata = str[i];
-		writeCh(wdata);
+		tlcd_writeCh(wdata);
 	}
-	return TRUE;
+	return tlcd_TRUE;
 
 }
 
 #define LINE_NUM			2
 #define COLUMN_NUM			16			
-int clearScreen(int nline)
+int tlcd_clearScreen(int nline)
 {
 	int i;
 	if (nline == 0)
 	{
-		if(IsBusy())
+		if(tlcd_IsBusy())
 		{	
 			perror("clearScreen error\n");
-			return FALSE;
+			return tlcd_FALSE;
 		}
-		if (!writeCmd(CLEAR_DISPLAY))
-			return FALSE;
-		return TRUE;
+		if (!tlcd_writeCmd(tlcd_CLEAR_DISPLAY))
+			return tlcd_FALSE;
+		return tlcd_TRUE;
 	}
 	else if (nline == 1)
 	{	
-		setDDRAMAddr(0,1);
+		tlcd_setDDRAMAddr(0,1);
 		for(i = 0; i <= COLUMN_NUM ;i++ )
 		{
-			writeCh((unsigned char)' ');
+			tlcd_writeCh((unsigned char)' ');
 		}	
-		setDDRAMAddr(0,1);
+		tlcd_setDDRAMAddr(0,1);
 
 	}
 	else if (nline == 2)
 	{	
-		setDDRAMAddr(0,2);
+		tlcd_setDDRAMAddr(0,2);
 		for(i = 0; i <= COLUMN_NUM ;i++ )
 		{
-			writeCh((unsigned char)' ');
+			tlcd_writeCh((unsigned char)' ');
 		}	
-		setDDRAMAddr(0,2);
+		tlcd_setDDRAMAddr(0,2);
 	}
-	return TRUE;
+	return tlcd_TRUE;
 }
 
-void tlcdf() {
-	clearScreen(0);
-	displayMode(1, 1, TRUE);
-	setDDRAMAddr(0,1);
+void write_tlcd() {
+	tlcd_clearScreen(0);
+	tlcd_displayMode(1, 1, tlcd_TRUE);
+	tlcd_setDDRAMAddr(0,1);
 	usleep(2000);
-	writeStr("temp: 18C");
+	tlcd_writeStr("temp: 18C");
 
-	setDDRAMAddr(0,2);
+	tlcd_setDDRAMAddr(0,2);
 	usleep(2000);
-	writeStr("hum: xx%");
+	tlcd_writeStr("hum: xx%");
 }
 
 int main(int argc , char **argv)
 {
-	fd = open(DRIVER_NAME,O_RDWR);
-	if ( fd < 0 )
+	fd_tlcd = open("/dev/cntlcd",O_RDWR);
+	if ( fd_tlcd < 0 )
 	{
 		perror("driver open error.\n");
 		return 1;
 	}
 
-	tlcdf();
+	write_tlcd();
 	close(fd);
 	
 	return 0;
