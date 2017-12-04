@@ -1,0 +1,12 @@
+Plant	 Temp        pH       light       type
+Tomato:  18 - 24    5-7        6-8        moist
+Basil:   21 - 32     7         4-6        moist
+Rosemary:18-24      6-8        4-6        moist
+Carrots: 10-30      7-8        4-10       moist
+Kale:    14-24      6-7        6-8        moist
+
+Lettuce: 7-18       6-8        2-6        drain
+Lavender:18-24      7-8        6-8        drain
+Peppers: 21-35       7         6-8        drain
+Thyme:   18-24      6-8        6-10       drain
+Sage:    18-24      6-7        6-8        drain
