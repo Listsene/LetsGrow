@@ -14,7 +14,7 @@ struct plants {
 };
 plants createPlant() {
 	plants p;
-	int r = rand() % 5 + 1; //random number 1-5
+	int r = rand() % 10 + 1; //random number 1-10
 	int s;
 	if (r == 1) {
 		p.temp = rand() % 7 + 19; //18 - 24 C
@@ -76,19 +76,54 @@ plants createPlant() {
 		}
 		strncpy(p.plant, "lavender", 10);
 	}
+	else if (r == 6) {
+		p.temp = rand() % 21 + 11; //10 - 30 C
+		p.ph = rand() % 2 + 8; //7 - 8 pH
+		p.light = rand() % 3 + 7; // 6 - 8 hrs
+		strncpy(p.soil, "drain", 10);
+		strncpy(p.plant, "carrots", 10);
+	}
+	else if (r == 7) {
+		p.temp = rand() % 11 + 15; //14 - 24 C
+		p.ph = rand() % 2 + 7; //6 - 7 pH
+		p.light = rand() % 3 + 7; // 6 - 8 hrs
+		strncpy(p.soil, "moist", 10);
+		strncpy(p.plant, "kale", 10);
+	}
+	else if (r == 8) {
+		p.temp = rand() % 12 + 8; //7 - 18 C
+		p.ph = rand() % 3 + 7; //6 - 8 pH
+		p.light = rand() % 5 + 3; // 2 - 6 hrs
+		strncpy(p.soil, "drain", 10);
+		strncpy(p.plant, "lettuce", 10);
+	}
+	else if (r == 9) {
+		p.temp = rand() % 15 + 22; //21 - 35 C
+		p.ph = 7; //7 pH
+		p.light = rand() % 3 + 7; // 6 - 8 hrs
+		strncpy(p.soil, "drain", 10);
+		strncpy(p.plant, "peppers", 10);
+	}
+	else if (r == 10) {
+		p.temp = rand() % 7 + 19; //18 - 24 C
+		p.ph = rand() % 3 + 7; //6 - 8 pH
+		p.light = rand() % 3 + 7; // 6 - 8 hrs
+		strncpy(p.soil, "drain", 10);
+		strncpy(p.plant, "sage", 10);
+	}
 	return p;
 }
 int createData(plants p[], FILE *w) {
 	for (int i = 0; i < DATA_SIZE; i++) {
 		p[i] = createPlant();
-		fprintf(w, "%d,%d,%d,%s,%s\n", p[i].temp, p[i].ph, p[i].light, p[i].plant, p[i].soil);
+		fprintf(w, "%d,%d,%d,%s,%s\n",p[i].temp,p[i].ph,p[i].light,p[i].soil,p[i].plant);
 	}
 	return 1;
 }
 int createTrain(plants p[], FILE *w2) {
 	for (int i = 0; i < TEST_SIZE; i++) {
 		p[i] = createPlant();
-		fprintf(w2, "%d,%d,%d,%s,%s\n", p[i].temp, p[i].ph, p[i].light, p[i].plant, p[i].soil);
+		fprintf(w2, "%d,%d,%d,%s,%s\n",p[i].temp,p[i].ph,p[i].light,p[i].soil,p[i].plant);
 	}
 	return 1;
 }
@@ -97,7 +132,7 @@ int main()
 {
 	struct plants p[DATA_SIZE];
 	struct plants p2[TEST_SIZE];
-	srand(time(NULL));   // should only be called once
+	srand(time(NULL));   
 
 	FILE *w, *w2;
 	w = fopen("plant.data", "w+");
