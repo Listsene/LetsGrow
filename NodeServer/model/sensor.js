@@ -4,19 +4,17 @@ var Schema = mongoose.Schema;
 var SchemaTypes = mongoose.Schema.Types;
 
 var sensorSchema = new Schema({
-	time: { type: Date, default : Date.now },
-	soil1: { type: SchemaTypes.Double },
-	// soil2: { type: SchemaTypes.Double },
-	// soil3: { type: SchemaTypes.Double },
-	
-	section1: { type: Schema.Types.ObjectId, ref: 'Flower' },
-	// section2: { type: Schema.Types.ObjectId, ref: 'Flower' },
-	// section3: { type: Schema.Types.ObjectId, ref: 'Flower' },
-
-	temp: { type: SchemaTypes.Double },
-	humi: { type: SchemaTypes.Double },
+	time: String,
+	soil1: { type : Number },
+	soil2: { type : Number },
+	soil3: { type : Number },
+	temp: { type : Number },
+	humi: { type : Number },
 	ph: { type: SchemaTypes.Double },
-	sun: { type : Number }
+	sun: { type : Number },
+	section1: String,
+	section2: String,
+	section3: String
 });
 
-module.exports = mongoose.model('Sensor', sensorSchema);
+module.exports = mongoose.model('f_arduino', sensorSchema);

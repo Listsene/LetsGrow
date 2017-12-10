@@ -4,13 +4,13 @@ var Schema = mongoose.Schema;
 var SchemaTypes = mongoose.Schema.Types;
 
 var plantSchema = new Schema({
-	sort: { type: Schema.Types.ObjectId, ref: 'Flower' },
-	time: Date,
-	soil: { type: SchemaTypes.Double },
+	sort: String,
+	time: String,
+	soil: { type : Number },
 	temp: { type: SchemaTypes.Double },
 	humi: { type: SchemaTypes.Double },
-	ph: { type: SchemaTypes.Double },
+	PH: { type: SchemaTypes.Double },
 	sun: { type : Number }
 });
 
-module.exports = mongoose.model('Plant', plantSchema);
+module.exports = mongoose.model('f_standard', plantSchema);
