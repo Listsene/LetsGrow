@@ -2,8 +2,8 @@
 #include <time.h>
 #include <stdlib.h>
 #include <string.h>
-#define DATA_SIZE 6400
-#define TEST_SIZE 3200
+#define DATA_SIZE 8800
+#define TEST_SIZE 4200
 
 struct plants {
 	int temp;
@@ -20,95 +20,70 @@ plants createPlant() {
 		p.temp = rand() % 7 + 19; //18 - 24 C
 		p.ph = rand() % 3 + 6; //5 - 7 pH
 		p.light = rand() % 4 + 8; // 7 - 10 hrs
-		if ((s = rand() % 10) > 7) {
-			strncpy(p.soil, "drain", 10);
-		}
-		else {
-			strncpy(p.soil, "moist", 10);
-		}
+		strncpy(p.soil, "1", 10);
 		strncpy(p.plant, "tomato", 10);
 	}
 	else if (r == 2) {
 		p.temp = rand() % 12 + 22; //21 - 32 C
 		p.ph = 7;
 		p.light = rand() % 3 + 5; // 4 - 6 hrs
-		if ((s = rand() % 10) > 7) {
-			strncpy(p.soil, "drain", 10);
-		}
-		else {
-			strncpy(p.soil, "moist", 10);
-		}
+		strncpy(p.soil, "1", 10);
 		strncpy(p.plant, "basil", 10);
 	}
 	else if (r == 3) {
 		p.temp = rand() % 12 + 8; //7 - 18 C
 		p.ph = rand() % 3 + 7; //6 - 8 pH
 		p.light = rand() % 5 + 3; // 2 - 6 hrs
-		if ((s = rand() % 10) > 7) {
-			strncpy(p.soil, "moist", 10);
-		}
-		else {
-			strncpy(p.soil, "drain", 10);
-		}
+		strncpy(p.soil, "0", 10);
 		strncpy(p.plant, "lettuce", 10);
 	}
 	else if (r == 4) {
 		p.temp = rand() % 7 + 19; //18 - 24 C
 		p.ph = rand() % 3 + 6; //5 - 7 pH
 		p.light = rand() % 3 + 5; // 4 - 6 hrs
-		if ((s = rand() % 10) > 7) {
-			strncpy(p.soil, "moist", 10);
-		}
-		else {
-			strncpy(p.soil, "drain", 10);
-		}
+		strncpy(p.soil, "0", 10);
 		strncpy(p.plant, "rosemary", 10);
 	}
 	else if (r == 5) {
 		p.temp = rand() % 7 + 19; //18 - 24 C
 		p.ph = rand() % 2 + 8; //7 - 8 pH
 		p.light = rand() % 3 + 7; // 6 - 8 hrs
-		if ((s = rand() % 10) > 7) {
-			strncpy(p.soil, "moist", 10);
-		}
-		else {
-			strncpy(p.soil, "drain", 10);
-		}
+		strncpy(p.soil, "0", 10);
 		strncpy(p.plant, "lavender", 10);
 	}
 	else if (r == 6) {
 		p.temp = rand() % 21 + 11; //10 - 30 C
 		p.ph = rand() % 2 + 8; //7 - 8 pH
 		p.light = rand() % 3 + 7; // 6 - 8 hrs
-		strncpy(p.soil, "drain", 10);
+		strncpy(p.soil, "0", 10);
 		strncpy(p.plant, "carrots", 10);
 	}
 	else if (r == 7) {
 		p.temp = rand() % 11 + 15; //14 - 24 C
 		p.ph = rand() % 2 + 7; //6 - 7 pH
 		p.light = rand() % 3 + 7; // 6 - 8 hrs
-		strncpy(p.soil, "moist", 10);
+		strncpy(p.soil, "1", 10);
 		strncpy(p.plant, "kale", 10);
 	}
 	else if (r == 8) {
-		p.temp = rand() % 12 + 8; //7 - 18 C
+		p.temp = rand() % 7 + 19; //18 - 24 C
 		p.ph = rand() % 3 + 7; //6 - 8 pH
-		p.light = rand() % 5 + 3; // 2 - 6 hrs
-		strncpy(p.soil, "drain", 10);
-		strncpy(p.plant, "lettuce", 10);
+		p.light = rand() % 5 + 7; // 6 - 10 hrs
+		strncpy(p.soil, "0", 10);
+		strncpy(p.plant, "thyme", 10);
 	}
 	else if (r == 9) {
 		p.temp = rand() % 15 + 22; //21 - 35 C
 		p.ph = 7; //7 pH
 		p.light = rand() % 3 + 7; // 6 - 8 hrs
-		strncpy(p.soil, "drain", 10);
+		strncpy(p.soil, "0", 10);
 		strncpy(p.plant, "peppers", 10);
 	}
 	else if (r == 10) {
 		p.temp = rand() % 7 + 19; //18 - 24 C
 		p.ph = rand() % 3 + 7; //6 - 8 pH
 		p.light = rand() % 3 + 7; // 6 - 8 hrs
-		strncpy(p.soil, "drain", 10);
+		strncpy(p.soil, "0", 10);
 		strncpy(p.plant, "sage", 10);
 	}
 	return p;

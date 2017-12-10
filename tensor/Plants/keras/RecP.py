@@ -8,12 +8,12 @@ from keras.utils import np_utils
 from sklearn.cross_validation import train_test_split
 from sklearn.preprocessing import LabelEncoder
 # fix random seed for reproducibility
-seed = 7
+seed = 3
 numpy.random.seed(seed)
 # load dataset
-dataframe = pandas.read_csv("iris.data", header=None)
+dataframe = pandas.read_csv("plant.data", header=None)
 dataset = dataframe.values
-X = dataset[:,0:4].astype(float)
+X = dataset[:,0:4].astype(int)
 Y = dataset[:,4]
 # encode class values as integers
 encoder = LabelEncoder()
@@ -26,12 +26,12 @@ def baseline_model():
 	# create model
 	model = Sequential()
 	model.add(Dense(4, input_dim=4, activation='relu'))
-	model.add(Dense(3, init='normal', activation='sigmoid'))
+	model.add(Dense(10, init='normal', activation='sigmoid'))
 	# Compile model
 	model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 	return model
-estimator = KerasClassifier(build_fn=baseline_model, nb_epoch=200, batch_size=5, verbose=1)
-X_train, X_test, Y_train, Y_test = train_test_split(X, dummy_y, test_size=0.33, random_state=seed)
+estimator = KerasClassifier(build_fn=baseline_model, nb_epoch=50, batch_size=5, verbose=1)
+X_train, X_test, Y_train, Y_test = train_test_split(X, dummy_y, test_size=0.005, random_state=seed)
 estimator.fit(X_train, Y_train)
 predictions = estimator.predict(X_test)
 print(predictions)
