@@ -1,4 +1,5 @@
 # Train model and make predictions
+import sys
 import numpy as np
 import pandas
 from sklearn.preprocessing import LabelEncoder
@@ -13,7 +14,7 @@ encoder = LabelEncoder()
 encoder.fit(Y)
 encoded_Y = encoder.transform(Y)
 model = load_model('plant_model.h5')
-test = np.array([[18,6,5,1],[22,8,8,0]])
+test = np.array([[sys.argv[1],sys.argv[2],sys.argv[3],sys.argv[4]],[0,0,0,0]])
 predictions = model.predict(test)
 #print(predictions[0])
 sorted = np.sort(predictions)
@@ -27,8 +28,8 @@ for i in range(0, 5):
 for i in range(9, 4, -1):
 	Probabilities.append(sorted[0][i])
 plants = encoder.inverse_transform(indexes)
-print('Test input data')
-print(test[0])
-print('predictions')
+#print('Test input data')
+#print(test[0])
+#print('predictions')
 print(plants)
 print(Probabilities)
