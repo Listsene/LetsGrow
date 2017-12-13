@@ -1,9 +1,9 @@
 var Serialport = require('serialport');
 var fs = require('fs');
 
-var flower = require('../model/flower');
-var plant = require('../model/plant');
-var sensor = require('../model/sensor');
+var flowerSchema = require('../model/flower');
+var plantSchema = require('../model/plant');
+var sensorSchema = require('../model/sensor');
 
 
 var conf_status = 1;
@@ -38,14 +38,33 @@ setInterval(function(){
 			for(var io in normalized_sensor){
 				console.log("input : " + io);
 				if(normalized_sensor[io]){
-// 
 					// normalized_sensor
-// 
-					console.log("sensors : " + normalized_sensor[io])
-					console.log("sensors : " + normalized_sensor[io].temp)
-					console.log("sensors : " + normalized_sensor[io].humi)
-					console.log("sensors : " + normalized_sensor[io].soil1)
-
+					var sensorTuple = new sensorSchema();
+					if(normalized_sensor[io].soil1)
+						sensorTuple.soil1 = normalized_sensor[io].soil1;
+					if(normalized_sensor[io].soil2)
+						sensorTuple.soil2 = normalized_sensor[io].soil2;
+					if(normalized_sensor[io].soil3)
+						sensorTuple.soil3 = normalized_sensor[io].soil3;
+					if(normalized_sensor[io].temp)
+						sensorTuple.temp = normalized_sensor[io].temp;
+					if(normalized_sensor[io].humi)
+						sensorTuple.humi = normalized_sensor[io].humi;
+					if(normalized_sensor[io].ph)
+						sensorTuple.ph = normalized_sensor[io].ph;
+					if(normalized_sensor[io].sun)
+						sensorTuple.sun = normalized_sensor[io].sun;
+					if(section1_id)
+						sensorTuple.section1 = section1_id;
+					if(section2_id)
+						sensorTuple.section2 = section2_id;
+					if(section3_id)
+						sensorTuple.section3 = section3_id;
+					
+					sensorTuple.save(function(err){
+						if(err){ console.log(err) }
+					})
+					console.log("normalized_sensor data : " + normalized_sensor[io])
 				}
 			}
 			// DB 저장 <- DEFAULT section1, section2, section3(선택이 필요하다.)
@@ -140,11 +159,9 @@ function normalize(data){
 	// 조도센서 처리
 	var ee = 0;
 	for(var each in spoon[7]){
-		if(each)
-			ee += each;
+		if(spoon[7][each])
+			ee += spoon[7][each];
 	}
-	console.log("sun is sssssssssssssssss "+ee);
-	console.log("spoon00 "+spoon[0][0]);
 	
 	if(ee >= (spoon[7].length/2) && spoon[7].length != 0){
 		spoon[7] = [1];
@@ -171,14 +188,6 @@ function normalize(data){
 		if(spoon[7].length > 0)
 			item.sun = spoon[7][0];
 		res.push(item);
-		console.log("********************");
-		console.log(item.soil1);
-		console.log(item.soil2);
-		console.log(item.soil3);
-		console.log(item.temp);
-		console.log(item.humi);
-		console.log(item.ph);
-		console.log(item.weight);
 	}
 
 	return res;
@@ -196,7 +205,7 @@ function array_normalize(array){
 		sum = 0;
 		devi = [];
 		for(var each in arr)
-			sum += each;
+			sum += arr[each];
 		aver = sum / arr.length;
 		for(var i=0; i<arr.length; i++)
 			devi[i] = Math.abs(arr[i] - aver);
@@ -220,7 +229,7 @@ function array_normalize(array){
 		}
 	}
 	for(var each in arr)
-		sum += each;
+		sum += arr[each];
 	aver = sum / arr.length;
 	for(var ll = arr.length; ll<(max_size/2); ll++){
 		arr[ll] = aver;

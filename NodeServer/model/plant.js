@@ -5,7 +5,7 @@ var SchemaTypes = mongoose.Schema.Types;
 
 var plantSchema = new Schema({
 	sort: String,
-	time: String,
+	time: Date,
 	soil: { type : Number },
 	temp: { type: SchemaTypes.Double },
 	humi: { type: SchemaTypes.Double },

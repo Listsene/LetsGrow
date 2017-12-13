@@ -22,9 +22,9 @@ var pages = require('./routes/page');
 
 var sensors = [];
 var sections = {};
-var refSensor = require('./routes/refSensor')
-var sensorData = require('./config/arduino'); // SetInterval 호출
-sensorData(sensors, sections);
+// var refSensor = require('./routes/refSensor')
+// var sensorData = require('./config/arduino'); // SetInterval 호출
+// sensorData(sensors, sections);
 
 
 var app = express();
@@ -43,10 +43,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
-app.use('/pages', pages);
-app.sensorData = sensors;
-app.sections = sections;
-refSensor(app);
+app.use('/pages', pages);  //localhost:3000/pages/search
+// app.sensorData = sensors;
+// app.sections = sections;
+// refSensor(app);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

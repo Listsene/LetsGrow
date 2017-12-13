@@ -3,7 +3,11 @@ var fs = require('fs')
 var get = require('simple-get')
 var pump = require('pump')
 var tfs = require('tar-fs')
-var noop = require('noop-logger')
+var extend = require('xtend')
+var noop = extend({
+  http: function () {},
+  silly: function () {}
+}, require('noop-logger'))
 var zlib = require('zlib')
 var util = require('./util')
 var error = require('./error')

@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var SchemaTypes = mongoose.Schema.Types;
 
 var sensorSchema = new Schema({
-	time: String,
+	time: { type: Date, default : Date.now },
 	soil1: { type : Number },
 	soil2: { type : Number },
 	soil3: { type : Number },
