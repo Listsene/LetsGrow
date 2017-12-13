@@ -60,8 +60,26 @@ module.exports = function(app){
 	});
 
 	app.get('/oled_condition', function(req,res){
-		
-		res.send('70'); // 1 ~ 100 까지 숫자 전달 <- oled에 전체적 '식물'과 '환경'의 적합도 이미지로 출력
+		var id = 1; 
+		var len = data.length;
+		if(len > 0){
+			while(len >= 1){
+				if(rank_soil(data[len-1]['soil'+id]) < 3){
+					res.send(100);
+				}
+				else if(rank_soil(data[len-1]['soil'+id]) < 6){
+					res.send(70);
+				}
+				else if(rank_soil(data[len-1]['soil'+id]) < 9){
+					res.send(40);
+				}	
+				else {
+					res.send(10);
+				}
+				len--;
+			}
+		}
+		//res.send('70'); // 1 ~ 100 까지 숫자 전달 <- oled에 전체적 '식물'과 '환경'의 적합도 이미지로 출력
 	});
 
 	app.get('/tlcd_water', function(req,res){
